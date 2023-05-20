@@ -1,11 +1,11 @@
-{% extends 'base.html.twig' %}
+{% extends 'template.html.twig' %}
 
-{% block title %}Hello DashboardController!
+{% block title %} Dashboard
 {% endblock %}
 
 {% block body %}
 	<div class="flex flex-row min-h-screen bg-gray-100 text-gray-800">
-    <aside
+    {# <aside
       class="sidebar w-64 md:shadow transform -translate-x-full md:translate-x-0 transition-transform duration-150 ease-in bg-indigo-500"
     >
       <div class="sidebar-header flex items-center justify-center py-4">
@@ -50,7 +50,7 @@
           {# <li class="my-px">
             <span class="flex font-medium text-sm text-gray-300 px-4 my-4 uppercase">Commandes</span>
           </li> #}
-          <li class="my-px">
+          {# <li class="my-px">
             <a
               href="/produit"
               class="flex flex-row items-center h-10 px-3 rounded-lg text-gray-300 hover:bg-gray-100 hover:text-gray-700"
@@ -143,7 +143,7 @@
               <span class="ml-3">Fournisseurs</span>
              
             </a>
-          </li>
+          </li> #}
           {# <li class="my-px">
             <a
               href="#"
@@ -190,7 +190,7 @@
             </a>
           </li> #}
           
-        
+{#         
           <li class="my-px">
             <a
               href="/logout"
@@ -215,8 +215,8 @@
             </a>
           </li>
         </ul>
-      </div>
-    </aside>
+      </div> #}
+    {# </aside> #}
     <main class="main flex flex-col flex-grow -ml-64 md:ml-0 transition-all duration-150 ease-in">
       <header class="header bg-white shadow py-4 px-4">
         <div class="header-content flex items-center flex-row">

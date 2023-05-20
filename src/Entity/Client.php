@@ -13,82 +13,52 @@ class Client
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column]
-    private ?int $uniqueId = null;
+    #[ORM\Column(length: 255)]
+    private ?string $UniqueId = null;
 
     #[ORM\Column(length: 255)]
-    private ?string $nom = null;
+    private ?string $name = null;
 
     #[ORM\Column(length: 255)]
-    private ?string $prenom = null;
-
-    #[ORM\Column(length: 12)]
-    private ?string $numero = null;
-
-    #[ORM\Column(length: 255, nullable: true)]
-    private ?string $addresse = null;
+    private ?string $antecedent = null;
 
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getUniqueId(): ?int
+    public function getUniqueId(): ?string
     {
-        return $this->uniqueId;
+        return $this->UniqueId;
     }
 
-    public function setUniqueId(int $uniqueId): self
+    public function setUniqueId(string $UniqueId): self
     {
-        $this->uniqueId = $uniqueId;
+        $this->UniqueId = $UniqueId;
 
         return $this;
     }
 
-    public function getNom(): ?string
+    public function getName(): ?string
     {
-        return $this->nom;
+        return $this->name;
     }
 
-    public function setNom(string $nom): self
+    public function setName(string $name): self
     {
-        $this->nom = $nom;
+        $this->name = $name;
 
         return $this;
     }
 
-    public function getPrenom(): ?string
+    public function getAntecedent(): ?string
     {
-        return $this->prenom;
+        return $this->antecedent;
     }
 
-    public function setPrenom(string $prenom): self
+    public function setAntecedent(string $antecedent): self
     {
-        $this->prenom = $prenom;
-
-        return $this;
-    }
-
-    public function getNumero(): ?string
-    {
-        return $this->numero;
-    }
-
-    public function setNumero(string $numero): self
-    {
-        $this->numero = $numero;
-
-        return $this;
-    }
-
-    public function getAddresse(): ?string
-    {
-        return $this->addresse;
-    }
-
-    public function setAddresse(?string $addresse): self
-    {
-        $this->addresse = $addresse;
+        $this->antecedent = $antecedent;
 
         return $this;
     }

@@ -3,8 +3,6 @@
 namespace App\Entity;
 
 use App\Repository\ProduitRepository;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: ProduitRepository::class)]
@@ -15,122 +13,67 @@ class Produit
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(length: 255)]
-    private ?string $nom = null;
+    #[ORM\Column(length: 150)]
+    private ?string $libelle = null;
 
     #[ORM\Column]
-    private ?int $buy = null;
+    private ?int $pa = null;
 
     #[ORM\Column]
-    private ?int $sell = null;
+    private ?int $pv = null;
 
-    #[ORM\ManyToOne(inversedBy: 'produits')]
-    #[ORM\JoinColumn(nullable: false)]
-    private ?Fournisseur $fournisseur = null;
-
-    #[ORM\OneToMany(mappedBy: 'produit_id', targetEntity: Commande::class, orphanRemoval: true)]
-    private Collection $commandes;
-
-    #[ORM\ManyToOne(inversedBy: 'produit')]
-    #[ORM\JoinColumn(nullable: false)]
-    private ?Commande $commande = null;
-
-    public function __construct()
-    {
-        $this->commandes = new ArrayCollection();
-    }
+    #[ORM\Column]
+    private ?int $stock = null;
 
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getNom(): ?string
+    public function getLibelle(): ?string
     {
-        return $this->nom;
+        return $this->libelle;
     }
 
-    public function setNom(string $nom): self
+    public function setLibelle(string $libelle): self
     {
-        $this->nom = $nom;
+        $this->libelle = $libelle;
 
         return $this;
     }
 
-    public function getBuy(): ?int
+    public function getPa(): ?int
     {
-        return $this->buy;
+        return $this->pa;
     }
 
-    public function setBuy(int $buy): self
+    public function setPa(int $pa): self
     {
-        $this->buy = $buy;
+        $this->pa = $pa;
 
         return $this;
     }
 
-    public function getSell(): ?int
+    public function getPv(): ?int
     {
-        return $this->sell;
+        return $this->pv;
     }
 
-    public function setSell(int $sell): self
+    public function setPv(int $pv): self
     {
-        $this->sell = $sell;
+        $this->pv = $pv;
 
         return $this;
     }
 
-    public function getFournisseur(): ?Fournisseur
+    public function getStock(): ?int
     {
-        return $this->fournisseur;
+        return $this->stock;
     }
 
-    public function setFournisseur(?Fournisseur $fournisseur): self
+    public function setStock(int $stock): self
     {
-        $this->fournisseur = $fournisseur;
-
-        return $this;
-    }
-
-    /**
-     * @return Collection<int, Commande>
-     */
-    public function getCommandes(): Collection
-    {
-        return $this->commandes;
-    }
-
-    public function addCommande(Commande $commande): self
-    {
-        if (!$this->commandes->contains($commande)) {
-            $this->commandes->add($commande);
-            $commande->setProduitId($this);
-        }
-
-        return $this;
-    }
-
-    public function removeCommande(Commande $commande): self
-    {
-        if ($this->commandes->removeElement($commande)) {
-            // set the owning side to null (unless already changed)
-            if ($commande->getProduitId() === $this) {
-                $commande->setProduitId(null);
-            }
-        }
-
-        return $this;
-    }
-
-    public function getCommande(): ?Commande
-    {
-        return $this->commande;
-    }
-
-    public function setCommande(?Commande $commande): self
-    {
-        $this->commande = $commande;
+        $this->stock = $stock;
 
         return $this;
     }

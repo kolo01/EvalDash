@@ -12,10 +12,11 @@ class CommandeType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('num_com')
+            ->add('NumCom')
+            ->add('dateCom')
             ->add('total')
-            ->add('quantite')
-            ->add('produit_id')
+            ->add('observation')
+            ->add('client')
         ;
     }
 

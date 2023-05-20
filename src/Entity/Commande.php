@@ -3,8 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\CommandeRepository;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: CommandeRepository::class)]
@@ -15,29 +14,21 @@ class Commande
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(length: 10)]
-    private ?string $num_com = null;
+    #[ORM\Column(length: 50)]
+    private ?string $NumCom = null;
 
-    #[ORM\ManyToOne(inversedBy: 'commandes')]
+    #[ORM\ManyToOne]
     #[ORM\JoinColumn(nullable: false)]
-    private ?Produit $produit_id = null;
+    private ?Client $client = null;
 
-    #[ORM\Column]
-    private ?int $total = null;
+    #[ORM\Column(type: Types::DATE_MUTABLE)]
+    private ?\DateTimeInterface $dateCom = null;
 
-    #[ORM\Column]
-    private ?float $quantite = null;
+    #[ORM\Column(length: 50)]
+    private ?string $total = null;
 
-    #[ORM\OneToMany(mappedBy: 'commande', targetEntity: Produit::class, orphanRemoval: true)]
-    private Collection $produit;
-
-    #[ORM\Column(length: 255)]
-    private ?string $status = null;
-
-    public function __construct()
-    {
-        $this->produit = new ArrayCollection();
-    }
+    #[ORM\Column(length: 50)]
+    private ?string $observation = null;
 
     public function getId(): ?int
     {
@@ -46,90 +37,60 @@ class Commande
 
     public function getNumCom(): ?string
     {
-        return $this->num_com;
+        return $this->NumCom;
     }
 
-    public function setNumCom(string $num_com): self
+    public function setNumCom(string $NumCom): self
     {
-        $this->num_com = $num_com;
+        $this->NumCom = $NumCom;
 
         return $this;
     }
 
-    public function getProduitId(): ?Produit
+    public function getClient(): ?Client
     {
-        return $this->produit_id;
+        return $this->client;
     }
 
-    public function setProduitId(?Produit $produit_id): self
+    public function setClient(?Client $client): self
     {
-        $this->produit_id = $produit_id;
+        $this->client = $client;
 
         return $this;
     }
 
-    public function getTotal(): ?int
+    public function getDateCom(): ?\DateTimeInterface
+    {
+        return $this->dateCom;
+    }
+
+    public function setDateCom(\DateTimeInterface $dateCom): self
+    {
+        $this->dateCom = $dateCom;
+
+        return $this;
+    }
+
+    public function getTotal(): ?string
     {
         return $this->total;
     }
 
-    public function setTotal(int $total): self
+    public function setTotal(string $total): self
     {
         $this->total = $total;
 
         return $this;
     }
 
-    public function getQuantite(): ?float
+    public function getObservation(): ?string
     {
-        return $this->quantite;
+        return $this->observation;
     }
 
-    public function setQuantite(float $quantite): self
+    public function setObservation(string $observation): self
     {
-        $this->quantite = $quantite;
-
-        return $this;
-    }
-
-    /**
-     * @return Collection<int, Produit>
-     */
-    public function getProduit(): Collection
-    {
-        return $this->produit;
-    }
-
-    public function addProduit(Produit $produit): self
-    {
-        if (!$this->produit->contains($produit)) {
-            $this->produit->add($produit);
-            $produit->setCommande($this);
-        }
-
-        return $this;
-    }
-
-    public function removeProduit(Produit $produit): self
-    {
-        if ($this->produit->removeElement($produit)) {
-            // set the owning side to null (unless already changed)
-            if ($produit->getCommande() === $this) {
-                $produit->setCommande(null);
-            }
-        }
-
-        return $this;
-    }
-
-    public function getStatus(): ?string
-    {
-        return $this->status;
-    }
-
-    public function setStatus(string $status): self
-    {
-        $this->status = $status;
+        $this->observation = $observation;
 
         return $this;
     }
