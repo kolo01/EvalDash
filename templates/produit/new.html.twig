@@ -1,0 +1,11 @@
+{% extends 'template.html.twig' %}
+
+{% block title %}New Produit{% endblock %}
+
+{% block body %}
+    <h1>CREER UN NOUVELLE UTILISATEUR</h1>
+    <a href="{{ path('produit_liste') }}">REVENIR EN ARRIERE</a>
+    {{ include('produit/_form.html.twig') }}
+
+    
+{% endblock %}

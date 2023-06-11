@@ -1,53 +1,54 @@
 {% extends 'template.html.twig' %}
 
-{% block title %}Client index{% endblock %}
+{% block title %}Client index
+{% endblock %}
 
 {% block body %}
-  <div class ="container">
-            <div class ="panel panel-primary">
-                <div class ="panel-heading">
-               <i class="icon_menu"></i>Liste Client
-            </div>
-             
-                <div class ="panel-body">
-    <h1>Client index</h1>
+	<div class="container">
+		<div class="panel panel-primary">
+			<div class="panel-heading">
+				<i class="icon_menu"></i>Liste Client
+			</div>
 
-    <table class="table table-condensed">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>UniqueId</th>
-                <th>Nom</th>
-                <th>antecedent</th>
-               
-                <th>actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for client in clients %}
-            <tr>
-                <td>{{ client.id }}</td>
-                <td>{{ client.UniqueId }}</td>
-                <td>{{ client.name }}</td>
-                <td>{{ client.antecedent }}</td>
-               
-                <td>
-                  <a href="{{ path('client_show', {'id': client.id}) }}" class = "btn btn-success">show</a>
-                    </td>
-                    <td>
-                    <a href="{{ path('client_edit', {'id': client.id}) }}"class = "btn btn-warning">edit</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="13">Pas de client trouvee</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+			<div class="panel-body">
+				<h1>
+					<a href="{{ path('app_client_add') }}" class="btn btn-success">
+						<i class="fas fa-user-alt    ">Ajouter un client</i>
+					</a>
+				</h1>
 
-    {# <a href="{{ path('client_new') }}"class = "btn btn-success">Creer un nouveau</a> #}
-</div>
-</div>
-</div>
+				<table class="table table-condensed">
+					<thead>
+						<tr>
+							<th>Id</th>
+							<th>UniqueId</th>
+							<th>Nom</th>
+							<th>antecedent</th>
+							<th>actions</th>
+						</tr>
+					</thead>
+					<tbody>
+						{% for client in clients %}
+							<tr>
+								<td>{{ client.id }}</td>
+								<td>{{ client.UniqueId }}</td>
+								<td>{{ client.name }}</td>
+								<td>{{ client.antecedent }}</td>
+								<td>
+									<a href="{{ path('app_client_edit', {'id': client.id}) }}" class="btn btn-primary">Modifier</a>
+								</td>
+								<td>
+									<a href="{{ path('app_client_del', {'id': client.id}) }}" class="btn btn-danger">Supprimer</a>
+								</td>
+							</tr>
+						{% else %}
+							<tr>
+								<td colspan="13">Pas de client trouvee</td>
+							</tr>
+						{% endfor %}
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
 {% endblock %}

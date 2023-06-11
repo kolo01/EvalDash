@@ -1,20 +1,43 @@
-{% extends 'base.html.twig' %}
+{% extends 'template.html.twig' %}
 
-{% block title %}Hello ProduitController!{% endblock %}
+{% block title %}Gestion des Produits{% endblock %}
 
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
+    <h1>Liste des Produits</h1>
+<a href="{{ path('produit_new') }}"class = "btn btn-success">AJOUTER PRODUIT</a>
+    <table class="table table-condensed">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Libelle</th>
+                <th>Prix d'Achat</th>
+                <th>Prix de Vente</th>
+                <th>Quantite</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for produit in produits %}
+            <tr>
+                <td>{{ produit.id }}</td>
+                <td>{{ produit.libelle }}</td>
+                <td>{{ produit.Pa }}</td>
+                <td>{{ produit.Pv }}</td>
+                <td>{{ produit.stock }}</td>
+              
+                <td>
+                    <a href="{{ path('produit_show', {'id': produit.id}) }}" class = "btn btn-primary">Modifier</a>
+                    <a href="{{ path('produit_delete', {'id': produit.id}) }}" class = "btn btn-danger">Supprimer</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="8">AUCUN PRODUIT DE TROUVER</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
 
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
+    
 
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code><a href="{{ 'C:/Users/LAZYBOY/Desktop/all rschain/Fernand/src/Controller/ProduitController.php'|file_link(0) }}">src/Controller/ProduitController.php</a></code></li>
-        <li>Your template at <code><a href="{{ 'C:/Users/LAZYBOY/Desktop/all rschain/Fernand/templates/produit/index.html.twig'|file_link(0) }}">templates/produit/index.html.twig</a></code></li>
-    </ul>
-</div>
 {% endblock %}
