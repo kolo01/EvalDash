@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\CommandeRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -17,10 +19,6 @@ class Commande
     #[ORM\Column(length: 50)]
     private ?string $NumCom = null;
 
-    #[ORM\ManyToOne]
-    #[ORM\JoinColumn(nullable: false)]
-    private ?Client $client = null;
-
     #[ORM\Column(type: Types::DATE_MUTABLE)]
     private ?\DateTimeInterface $dateCom = null;
 
@@ -29,6 +27,18 @@ class Commande
 
     #[ORM\Column(length: 50)]
     private ?string $observation = null;
+
+    #[ORM\OneToMany(mappedBy: 'commande', targetEntity: Produit::class, orphanRemoval: true)]
+    private Collection $Produit;
+
+    #[ORM\ManyToOne(inversedBy: 'commandes')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Client $Client = null;
+
+    public function __construct()
+    {
+        $this->Produit = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -47,18 +57,7 @@ class Commande
         return $this;
     }
 
-    public function getClient(): ?Client
-    {
-        return $this->client;
-    }
-
-    public function setClient(?Client $client): self
-    {
-        $this->client = $client;
-
-        return $this;
-    }
-
+   
     public function getDateCom(): ?\DateTimeInterface
     {
         return $this->dateCom;
@@ -91,6 +90,48 @@ class Commande
     public function setObservation(string $observation): self
     {
         $this->observation = $observation;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Produit>
+     */
+    public function getProduit(): Collection
+    {
+        return $this->Produit;
+    }
+
+    public function addProduit(Produit $produit): self
+    {
+        if (!$this->Produit->contains($produit)) {
+            $this->Produit->add($produit);
+            $produit->setCommande($this);
+        }
+
+        return $this;
+    }
+
+    public function removeProduit(Produit $produit): self
+    {
+        if ($this->Produit->removeElement($produit)) {
+            // set the owning side to null (unless already changed)
+            if ($produit->getCommande() === $this) {
+                $produit->setCommande(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function getClient(): ?Client
+    {
+        return $this->Client;
+    }
+
+    public function setClient(?Client $Client): self
+    {
+        $this->Client = $Client;
 
         return $this;
     }
