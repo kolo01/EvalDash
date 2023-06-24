@@ -24,7 +24,7 @@ class CommandeController extends AbstractController
     #[Route('/newCommand', name: 'app_commande_new')]
     public function new(Request $req,ManagerRegistry $em): Response
     {
-        $client = new Client();
+       
         $commande=new Commande();
 
         return $this->render('commande/index.html.twig', [
