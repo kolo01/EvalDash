@@ -12,8 +12,8 @@
 
 			<div class="panel-body">
 				<h1>
-					<a href="{{ path('app_client_add') }}" class="btn btn-success">
-						<i class="fas fa-user-alt    ">Ajouter un client</i>
+					<a href="{{ path('app_commande_new') }}" class="btn btn-success">
+						<i class="fas fa-user-alt    ">Ajouter une Commande</i>
 					</a>
 				</h1>
 
@@ -31,17 +31,19 @@
 						</tr>
 					</thead>
 					<tbody>
-						{% for client in clients %}
+						{% for c in commandes %}
 							<tr>
-								<td>{{ client.id }}</td>
-								<td>{{ client.UniqueId }}</td>
-								<td>{{ client.name }}</td>
-								<td>{{ client.antecedent }}</td>
+								<td>{{ c.id }}</td>
+								<td>{{ c.NumCom }}</td>
+								<td>{{ c.NumCom }}</td>
+								<td>{{ c.dateCom ? c.dateCom|date('Y-m-d') : '' }}</td>
+								<td>{{ c.total }}</td>
+								<td>{{ c.observation }}</td>
 								<td>
-									<a href="{{ path('app_client_edit', {'id': client.id}) }}" class="btn btn-primary">Modifier</a>
+									{# <a href="{{ path('app_client_edit', {'id': client.id}) }}" class="btn btn-primary">Modifier</a> #}
 								</td>
 								<td>
-									<a href="{{ path('app_client_del', {'id': client.id}) }}" class="btn btn-danger">Voir</a>
+									{# <a href="{{ path('app_client_del', {'id': client.id}) }}" class="btn btn-danger">Voir</a> #}
 								</td>
 							</tr>
 						{% else %}

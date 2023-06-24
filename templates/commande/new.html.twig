@@ -1,0 +1,27 @@
+{% extends 'template.html.twig' %}
+
+
+{% block title %}Nouveau Produit
+{% endblock %}
+
+{% block body %}
+	<h1>CREER UN NOUVELLE UTILISATEUR</h1>
+	
+	{{ form_start(form) }}
+	{{ form_widget(form) }}
+    <ul class="tags">
+        {% for prod in form.produit %}
+            <li>{{ form_row(produit.libelle) }}</li>
+        {% endfor %}
+        <ul class="tags"
+    data-index="{{ form.produit|length > 0 ? form.produit|last.vars.name + 1 : 0 }}"
+    {# data-prototype="{{ form_widget(form.produit.vars.prototype)|e('html_attr') }}" #}
+></ul>
+<button type="button" class="add_item_link" data-collection-holder-class="produit">Add a tag</button>
+    </ul>
+	<button class="btn">{{ button_label|default('Save') }}</button>
+	{{ form_end(form) }}
+    <a href="{{ path('app_commande') }}">REVENIR EN ARRIERE</a>
+
+
+{% endblock %}

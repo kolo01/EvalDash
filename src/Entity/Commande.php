@@ -28,7 +28,7 @@ class Commande
     #[ORM\Column(length: 50)]
     private ?string $observation = null;
 
-    #[ORM\OneToMany(mappedBy: 'commande', targetEntity: Produit::class, orphanRemoval: true)]
+    #[ORM\OneToMany(mappedBy: 'commande', targetEntity: Produit::class, orphanRemoval: true, cascade:["persist"])]
     private Collection $Produit;
 
     #[ORM\ManyToOne(inversedBy: 'commandes')]

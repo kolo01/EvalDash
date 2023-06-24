@@ -2,7 +2,10 @@
 
 namespace App\Form;
 
+use App\Entity\Client;
 use App\Entity\Commande;
+use App\Entity\Produit;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -17,12 +20,13 @@ class CommandeType extends AbstractType
             ->add('dateCom')
             ->add('total')
             ->add('observation')
-            ->add('Client')
-            ->add('Produit', CollectionType::class, [
-                'entry_type' => ProduitType::class,
-                'entry_options' => ['label' => true],
-                'allow_add' => true,
-            ])
+            ->add('Client',EntityType::class, [
+                'class' => Client::class,
+                'choice_label' => 'name',])
+            ->add('produit', EntityType::class, [
+                'class' => Produit::class,
+                'choice_label' => 'libelle',
+                'mapped' => false, ])
         ;
     }
 
