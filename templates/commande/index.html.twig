@@ -20,9 +20,9 @@
 				<table class="table table-condensed">
 					<thead>
 						<tr>
-							<th>Id</th>
+								<th>Numero de commande</th>
 							<th>Client</th>
-							<th>Numero de commande</th>
+						
 							<th>Date de commande</th>
 							<th>Total</th>
 							<th>Observation</th>
@@ -34,8 +34,9 @@
 						{% for c in commandes %}
 							<tr>
 								<td>{{ c.id }}</td>
-								<td>{{ c.NumCom }}</td>
-								<td>{{ c.NumCom }}</td>
+								{# <td>{{  }}</td> #}
+								{# <td>{{ c.NumCom }}</td>
+								<td>{{ c.NumCom }}</td> #}
 								<td>{{ c.dateCom ? c.dateCom|date('Y-m-d') : '' }}</td>
 								<td>{{ c.total }}</td>
 								<td>{{ c.observation }}</td>

@@ -1,27 +1,121 @@
 {% extends 'template.html.twig' %}
 
-
-{% block title %}Nouveau Produit
-{% endblock %}
+{% block title %}New Commande{% endblock %}
 
 {% block body %}
-	<h1>CREER UN NOUVELLE UTILISATEUR</h1>
-	
-	{{ form_start(form) }}
-	{{ form_widget(form) }}
-    <ul class="tags">
-        {% for prod in form.produit %}
-            <li>{{ form_row(produit.libelle) }}</li>
+
+        <form action="" method="post" >
+        
+   <div class ="container">
+            <div class ="panel panel-primary">
+                <div class ="panel-heading">
+               <i class="icon_menu"></i>Gestion Commande
+            </div>
+             
+                <div class ="panel-body">
+    <table class ="table-condensed">
+        <tr>
+            <td>Numéro commande : </td>
+           <td>{{ numc}}</td>
+            <td>Date Commande : </td>
+            <td>{{ form_widget(form.dateCom) }}</td>
+        </tr>
+         <tr>
+             <td>Client  : </td>
+            <td>{{ form_widget(form.Client) }}</td>
+        </tr>
+        <tr>
+            <td>Observation : </td>
+            <td>{{ form_widget(form.observation) }}</td>
+        </tr>
+    </table>
+        <table class ="table">
+           
+            <th class="col-md-1">Produit</th>
+            <th class="col-md-1">Prix Unitaire</th>
+            <th class="col-md-1">Qté</th>
+            <th class="col-md-1">Tva</th>
+            <th class="col-md-1">Mont Ht</th>
+            <th class="col-md-1">Action</th>
+ 
+        <tr>
+            <td class="col-md-1">
+                {{ form_widget(form2.Produit) }}
+            </td>
+            <td class="col-md-1" >
+              {{ form_widget(form2.PrixVente) }}  
+            </td>
+            <td class="col-md-1">
+              {{ form_widget(form2.quantite) }}
+            </td>
+           
+             <td class="col-md-1">
+               {{montht}}             
+            </td>
+            
+            <td class="col-md-1">
+                 <input type="submit" value = "Add" name ="bt" 
+                 class = "btn btn-warning"
+                  <i class = "glyphicon glyphicon-save"></i>
+            </td>
+
+        </tr>
+            
+        </table>
+        <table class ="table  table-condensed">
+        <thead class="thead-dark">
+            <tr>
+            <th>Ligne</th>
+                <th class="col-md-2">Désignation Article</th>
+                <th class="col-md-1">Prix Unitaire</th>
+                <th class="col-md-1">Quantite</th>
+                
+                <th class="col-md-1">Montant Total</th>                
+                <th class="col-md-1">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for t in lcomm %}
+             <tr>
+               {# <td class="col-md-2">{{ t.lig}}</td> #}
+                <td class="col-md-2">{{ t.Produit.libelle}}</td>             
+                <td class="col-md-1">{{ t.quantite }}</td> 
+                <td class="col-md-1">{{ t.PrixVente }}</td> 
+   
+                <td class="col-md-1" >{{ t.quantite * t.PrixVente }}</td> 
+                <td class="col-md-1"><a href="{{ path('supprime_commande', {'id': t.lig}) }}" 
+                 class = "btn btn-danger">
+                <i class = "glyphicon glyphicon-apple"></i>
+                Supprimer</a></td>
+
+       {# {% set  tottht = totht + (t.pv * t.qte) %}
+       {% set  totva = totva + (((t.pv * t.qte) * t.tva) *0.01) %} #}
+       {% set  totttc = totttc + (( (t.pv * t.qte) *( 100 + t.tva)) *0.01) %}            
         {% endfor %}
-        <ul class="tags"
-    data-index="{{ form.produit|length > 0 ? form.produit|last.vars.name + 1 : 0 }}"
-    {# data-prototype="{{ form_widget(form.produit.vars.prototype)|e('html_attr') }}" #}
-></ul>
-<button type="button" class="add_item_link" data-collection-holder-class="produit">Add a tag</button>
-    </ul>
-	<button class="btn">{{ button_label|default('Save') }}</button>
-	{{ form_end(form) }}
-    <a href="{{ path('app_commande') }}">REVENIR EN ARRIERE</a>
 
+        </tbody>
+    </table>
 
+      
+                             <tfoot>
+            <table class = "table table-condensed">
+            <tr>
+                {# <td>Tot Ht :</td>
+                <td class="col-md-2">{{ totht}}</td>
+               
+                <td>Tot Tva :</td>
+                <td class="col-md-2">{{totva }}</td> #}
+                <td>Tot TTC :</td>
+                <td class ="col-md-2">{{  totttc }}</td>
+             </tr>
+           
+                
+            </table>
+             </tfoot>
+<td><input type="submit" value = "Valider" name ="bt"
+ class = "btn btn-success" <i class = "glyphicon glyphicon-save"></i></td>
+  </form>
+    <a href="{{ path('app_commande') }}">back to list</a>
+    
 {% endblock %}
+

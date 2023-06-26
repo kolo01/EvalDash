@@ -16,8 +16,6 @@ class Commande
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(length: 50)]
-    private ?string $NumCom = null;
 
     #[ORM\Column(type: Types::DATE_MUTABLE)]
     private ?\DateTimeInterface $dateCom = null;
@@ -29,6 +27,7 @@ class Commande
     private ?string $observation = null;
 
     #[ORM\OneToMany(mappedBy: 'commande', targetEntity: Produit::class, orphanRemoval: true, cascade:["persist"])]
+    #[ORM\JoinColumn(nullable: false)]
     private Collection $Produit;
 
     #[ORM\ManyToOne(inversedBy: 'commandes')]
@@ -45,18 +44,7 @@ class Commande
         return $this->id;
     }
 
-    public function getNumCom(): ?string
-    {
-        return $this->NumCom;
-    }
-
-    public function setNumCom(string $NumCom): self
-    {
-        $this->NumCom = $NumCom;
-
-        return $this;
-    }
-
+ 
    
     public function getDateCom(): ?\DateTimeInterface
     {
