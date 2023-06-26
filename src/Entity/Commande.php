@@ -34,9 +34,13 @@ class Commande
     #[ORM\JoinColumn(nullable: false)]
     private ?Client $Client = null;
 
+    #[ORM\OneToMany(mappedBy: 'Commande', targetEntity: LigneCommande::class, orphanRemoval: true)]
+    private Collection $ligneCommandes;
+
     public function __construct()
     {
         $this->Produit = new ArrayCollection();
+        $this->ligneCommandes = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -120,6 +124,36 @@ class Commande
     public function setClient(?Client $Client): self
     {
         $this->Client = $Client;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, LigneCommande>
+     */
+    public function getLigneCommandes(): Collection
+    {
+        return $this->ligneCommandes;
+    }
+
+    public function addLigneCommande(LigneCommande $ligneCommande): self
+    {
+        if (!$this->ligneCommandes->contains($ligneCommande)) {
+            $this->ligneCommandes->add($ligneCommande);
+            $ligneCommande->setCommande($this);
+        }
+
+        return $this;
+    }
+
+    public function removeLigneCommande(LigneCommande $ligneCommande): self
+    {
+        if ($this->ligneCommandes->removeElement($ligneCommande)) {
+            // set the owning side to null (unless already changed)
+            if ($ligneCommande->getCommande() === $this) {
+                $ligneCommande->setCommande(null);
+            }
+        }
 
         return $this;
     }

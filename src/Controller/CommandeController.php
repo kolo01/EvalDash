@@ -34,7 +34,8 @@ class CommandeController extends AbstractController
         $lCommande= new LigneCommande();
         $compteurC=(count($comRep->findAll()) + 1);
         $compteurL=(count($lig->findAll()) + 1);
-
+        $message='';
+        $montht='';
         $form = $this->createForm(CommandeType::class,  $Commande);
         $form2 = $this->createForm(LigneCommamdeType::class,  $lCommande);
         $totttc = 0;
@@ -44,6 +45,7 @@ class CommandeController extends AbstractController
         if (!$session->has('commande')) {
             $session->set('commande', array());
         }
+        //doit servir a recuperer le tableau de produits et leur information 
         $Tabcomm = $session->get('commande', []);
         // if ($req->isMethod('POST')) {
             $form->handleRequest($req);
@@ -75,8 +77,11 @@ class CommandeController extends AbstractController
                 $em->flush();
                 $message = 'La Commande a ete ajoute avec succes';
             } else if ($choix == "Add") {
+                die("error");
                 $montht = $lCommande->getPrixVente() * $lCommande->getquantite();
                 $lig = sizeof($Tabcomm) + 1;
+               
+
                 $lCommande->setNumC($compteurC);
                 // $lCommande->setLig($lig);
                 $Tabcomm[$lig] = $lCommande;
