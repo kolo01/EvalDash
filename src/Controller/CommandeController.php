@@ -76,4 +76,38 @@ class CommandeController extends AbstractController
         // declarer un compteur pour avoir le numero de commande 
 
     }
+    #[Route('/{id}', name: 'commande_delete', methods: ['POST'])]
+    public function delete(Request $request, Commande $commande, CommandeRepository $commandeRepository): Response
+    {
+        if ($this->isCsrfTokenValid('delete'.$commande->getId(), $request->request->get('_token'))) {
+            $commandeRepository->remove($commande, true);
+        }
+
+        return $this->redirectToRoute('app_commande');
+    }
+    #[Route('/{id}/edit', name: 'commande_edit', methods: ['GET', 'POST'])]
+    public function edit(Request $request, Commande $commande, CommandeRepository $commandeRepository): Response
+    {
+        $form = $this->createForm(CommandeType::class, $commande);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $commandeRepository->save($commande, true);
+
+            return $this->redirectToRoute('app_commande');
+        }
+
+        return $this->renderForm('commande/edit.html.twig', [
+            'commande' => $commande,
+            'form' => $form,
+        ]);
+    }
+    
+    #[Route('/{id}', name: 'commande_show', methods: ['GET'])]
+    public function show(Commande $commande): Response
+    {
+        return $this->render('commande/show.html.twig', [
+            'commande' => $commande,
+        ]);
+    }
 }
