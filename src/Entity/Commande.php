@@ -32,7 +32,7 @@ class Commande
     #[ORM\JoinColumn(nullable: false)]
     private ?Client $Client = null;
 
-    #[ORM\OneToMany(mappedBy: 'Commande', targetEntity: LigneCommande::class, orphanRemoval: true,cascade:["persist"])]
+    #[ORM\OneToMany(mappedBy: 'Commande', targetEntity: LigneCommande::class, orphanRemoval: true,cascade:["persist","remove"])]
     private Collection $ligneCommandes;
 
     public function __construct()
