@@ -13,8 +13,7 @@ class LigneCommande
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column]
-    private ?int $Numc = null;
+ 
 
     #[ORM\Column]
     private ?int $PrixVente = null;
@@ -27,7 +26,7 @@ class LigneCommande
     private ?Produit $Produit = null;
 
     #[ORM\ManyToOne(inversedBy: 'ligneCommandes')]
-    #[ORM\JoinColumn(nullable: false)]
+    #[ORM\JoinColumn(nullable: true)]
     private ?Commande $Commande = null;
 
     public function getId(): ?int
@@ -35,17 +34,7 @@ class LigneCommande
         return $this->id;
     }
 
-    public function getNumc(): ?int
-    {
-        return $this->Numc;
-    }
-
-    public function setNumc(int $Numc): self
-    {
-        $this->Numc = $Numc;
-
-        return $this;
-    }
+   
 
     public function getPrixVente(): ?int
     {

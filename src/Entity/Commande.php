@@ -26,20 +26,18 @@ class Commande
     #[ORM\Column(length: 50)]
     private ?string $observation = null;
 
-    #[ORM\OneToMany(mappedBy: 'commande', targetEntity: Produit::class, orphanRemoval: true, cascade:["persist"])]
-    #[ORM\JoinColumn(nullable: false)]
-    private Collection $Produit;
+   
 
     #[ORM\ManyToOne(inversedBy: 'commandes')]
     #[ORM\JoinColumn(nullable: false)]
     private ?Client $Client = null;
 
-    #[ORM\OneToMany(mappedBy: 'Commande', targetEntity: LigneCommande::class, orphanRemoval: true)]
+    #[ORM\OneToMany(mappedBy: 'Commande', targetEntity: LigneCommande::class, orphanRemoval: true,cascade:["persist"])]
     private Collection $ligneCommandes;
 
     public function __construct()
     {
-        $this->Produit = new ArrayCollection();
+        
         $this->ligneCommandes = new ArrayCollection();
     }
 
@@ -86,35 +84,7 @@ class Commande
         return $this;
     }
 
-    /**
-     * @return Collection<int, Produit>
-     */
-    public function getProduit(): Collection
-    {
-        return $this->Produit;
-    }
-
-    public function addProduit(Produit $produit): self
-    {
-        if (!$this->Produit->contains($produit)) {
-            $this->Produit->add($produit);
-            $produit->setCommande($this);
-        }
-
-        return $this;
-    }
-
-    public function removeProduit(Produit $produit): self
-    {
-        if ($this->Produit->removeElement($produit)) {
-            // set the owning side to null (unless already changed)
-            if ($produit->getCommande() === $this) {
-                $produit->setCommande(null);
-            }
-        }
-
-        return $this;
-    }
+   
 
     public function getClient(): ?Client
     {

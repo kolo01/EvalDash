@@ -27,6 +27,15 @@ class CommandeType extends AbstractType
             ->add('Client',EntityType::class, [
                 'class' => Client::class,
                 'choice_label' => 'name',])
+                ->add("ligneCommandes",CollectionType::class,[
+                    'entry_type' => LigneCommandeType::class,
+                    'entry_options' => ['label' => false],
+                    'allow_add' => true,
+                    'by_reference' => false,
+                    'allow_delete' => true,
+
+                   
+                ])
         ;
     }
 
