@@ -35,17 +35,15 @@
 							<tr>
 								<td>{{ c.id }}</td>
 								{# <td>{{  }}</td> #}
-								{# <td>{{ c.NumCom }}</td>
-								<td>{{ c.NumCom }}</td> #}
+								{# {# <td>{{ c.NumCom }}</td> #}
+								<td>{{ c.id }}</td> 
 								<td>{{ c.dateCom ? c.dateCom|date('Y-m-d') : '' }}</td>
 								<td>{{ c.total }}</td>
 								<td>{{ c.observation }}</td>
-								<td>
-									{# <a href="{{ path('app_client_edit', {'id': client.id}) }}" class="btn btn-primary">Modifier</a> #}
-								</td>
-								<td>
-									{# <a href="{{ path('app_client_del', {'id': client.id}) }}" class="btn btn-danger">Voir</a> #}
-								</td>
+								 <td>
+                    <a href="{{ path('commande_show', {'id': c.id}) }}">show</a>
+                    <a href="{{ path('commande_edit', {'id': c.id}) }}">edit</a>
+                </td>
 							</tr>
 						{% else %}
 							<tr>

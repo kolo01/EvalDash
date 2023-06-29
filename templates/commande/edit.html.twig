@@ -1,0 +1,153 @@
+{% extends 'template.html.twig' %}
+
+{% block title %}New Commande
+{% endblock %}
+
+{% macro produitMacro(form) %}
+
+	
+		<tr>
+			<th class="col-md-1">Produit</th>
+			<th class="col-md-1">Prix Unitaire</th>
+			<th class="col-md-1">Quantité</th>
+			{# <th class="col-md-1">Tva</th> #}
+			<th class="col-md-1">Total</th>
+			
+		</tr>
+		
+			<td>{{ form_widget(form.Produit) }}</td>
+			<td>{{ form_widget(form.quantite) }}</td>
+			<td>{{ form_widget(form.PrixVente) }}</td>
+			<td>{{0 }}</td>
+			
+
+		
+
+	
+
+
+{% endmacro produitMacro %}
+
+
+{% import _self as produit %}
+
+
+{% block body %}
+
+	{{ form_start(form) }}
+
+	<div class="container">
+		<div class="panel panel-primary">
+			<div class="panel-heading">
+				<i class="icon_menu"></i>Gestion Commande
+			</div>
+
+			<div class="panel-body">
+				
+				<table class="table-condensed">
+					<tr>
+						{# <td>Numéro commande :
+						</td>
+						<td>{{ numc}}</td> #}
+						<td>Date Commande :
+						</td>
+						<td>{{ form_widget(form.dateCom) }}</td>
+						<td>Total :
+						</td>
+						<td>{{ form_widget(form.total) }}</td>
+					</tr>
+					<tr>
+						<td>Client  :
+						</td>
+						<td>{{ form_widget(form.Client) }}</td>
+					</tr>
+					<tr>
+						<td>Observation :
+						</td>
+						<td>{{ form_widget(form.observation) }}</td>
+					</tr>
+				</table>
+				<button type="button" class="ajout btn btn-outline-dark btn-info mb-4" data-collection-holder-class="ligne">Ajouter Ligne De Commande</button>
+
+
+				<div
+					class="ligne " data-index="{{ form.ligneCommandes|length > 0 ? form.ligneCommandes|last.vars.name + 1 : 0 }}" data-prototype="{{produit.produitMacro(form.ligneCommandes.vars.prototype)|e('html_attr') }}">
+				</div>
+
+			
+					<td>
+				<input type="submit" value="Mise A Jour" name="bt" class="btn btn-success"/> </td>
+			</td>
+			{{ form_end(form) }}
+	
+
+
+			<script>
+
+				jQuery(document).ready(function () { // Get the ul that holds the collection of tags
+				 
+var $tagsCollectionHolder = $('#lignes');
+// count the current form inputs we have (e.g. 2), use that as the new
+// index when inserting a new item (e.g. 2)
+
+$tagsCollectionHolder.data('index', $tagsCollectionHolder.find('input').length);
+$('.delete').each(function() {
+        addTagFormDeleteLink($(this));
+    });
+$('body').on('click', '.ajout', function (e) {
+var $collectionHolderClass = $(e.currentTarget).data('collectionHolderClass');
+// add a new tag form (see next code block)
+addFormToCollection($collectionHolderClass);
+})
+$('body').on('click', '.delete', function (e) {
+	
+var $collectionHolderClass = $(e.currentTarget).data('collectionHolderClass');
+alert($collectionHolderClass);
+// add a new tag form (see next code block)
+addTagFormDeleteLink($collectionHolderClass);
+})			
+
+});
+
+function addTagFormDeleteLink($tagFormLi) {
+    var $removeFormButton = $('<button  type="button" class=" btn btn-danger w-4">Delete this tag</button>');
+    $tagFormLi.append($removeFormButton);
+
+    $removeFormButton.on('click', function(e) {
+        // remove the li for the tag form
+        $tagFormLi.remove();
+    });
+}
+
+
+function addFormToCollection($collectionHolderClass) 
+{ // Get the ul that holds the collection of tags
+var $collectionHolder = $('.' + $collectionHolderClass);
+
+// Get the data-prototype explained earlier
+var prototype = $collectionHolder.data('prototype');
+
+// get the new index
+var index = $collectionHolder.data('index');
+
+var newForm = prototype;
+// You need this only if you didn't set 'label' => false in your tags field in TaskType
+// Replace '__name__label__' in the prototype's HTML to
+// instead be a number based on how many items we have
+// newForm = newForm.replace(/__name__label__/g, index);
+
+// Replace '__name__' in the prototype's HTML to
+// instead be a number based on how many items we have
+newForm = newForm.replace(/__name__/g, index);
+
+// increase the index with one for the next item
+$collectionHolder.data('index', index + 1);
+
+// Display the form in the page in an li, before the "Add a tag" link li
+var $newFormTr = $('<table  class="table " id="lignes"></table>').append(newForm);
+// Add the new form at the end of the list
+$collectionHolder.append($newFormTr);
+ addTagFormDeleteLink($newFormTr);
+}
+			</script>
+		{% endblock %}

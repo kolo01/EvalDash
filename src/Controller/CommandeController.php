@@ -2,12 +2,11 @@
 
 namespace App\Controller;
 
-use App\Entity\Client;
+
 use App\Entity\Commande;
-use App\Entity\LigneCommande;
+
 use App\Form\CommandeType;
-use App\Form\LigneCommamdeType;
-use App\Form\LigneCommandeType;
+
 use App\Repository\CommandeRepository;
 use App\Repository\LigneCommandeRepository;
 use App\Repository\ProduitRepository;
@@ -85,29 +84,32 @@ class CommandeController extends AbstractController
 
     //     return $this->redirectToRoute('app_commande');
     // }
-    // #[Route('/{id}/edit', name: 'commande_edit', methods: ['GET', 'POST'])]
-    // public function edit(Request $request, Commande $commande, CommandeRepository $commandeRepository): Response
-    // {
-    //     $form = $this->createForm(CommandeType::class, $commande);
-    //     $form->handleRequest($request);
 
-    //     if ($form->isSubmitted() && $form->isValid()) {
-    //         $commandeRepository->save($commande, true);
+    #[Route('/commande/{id}/edit', name: 'commande_edit', methods: ['GET', 'POST'])]
+    public function edit(Request $request,  CommandeRepository $commandeRepository,Commande  $commande): Response
+    {
+       
+        $form = $this->createForm(CommandeType::class, $commande);
+        $form->handleRequest($request);
 
-    //         return $this->redirectToRoute('app_commande');
-    //     }
+        if ($form->isSubmitted() && $form->isValid()) {
+            $commandeRepository->save($commande, true);
 
-    //     return $this->renderForm('commande/edit.html.twig', [
-    //         'commande' => $commande,
-    //         'form' => $form,
-    //     ]);
-    // }
+            return $this->redirectToRoute('app_commande');
+        }
+
+        return $this->renderForm('commande/edit.html.twig', [
+            'commande' => $commande,
+            'form' => $form,
+        ]);
+    }
     
-    // #[Route('/{id}', name: 'commande_show', methods: ['GET'])]
-    // public function show(Commande $commande): Response
-    // {
-    //     return $this->render('commande/show.html.twig', [
-    //         'commande' => $commande,
-    //     ]);
-    // }
+    #[Route('/commande/{id}', name: 'commande_show', methods: ['GET'])]
+    public function show(Commande $commande): Response
+    {
+       
+        return $this->render('commande/show.html.twig', [
+            'commande' => $commande,
+        ]);
+    }
 }
