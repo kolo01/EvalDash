@@ -9,4 +9,11 @@
 import './styles/app.css';
 
 // start the Stimulus application
-import './bootstrap';
+// import './bootstrap';
+	
+var $ = require( 'jquery' );
+var DataTable = require( 'datatables.net' )(window, $);
+ 
+let table = new DataTable('#myTable', {
+    // config options...
+});
