@@ -17,11 +17,20 @@ class LigneCommandeType extends AbstractType
             // ->add('Numc')
             ->add('PrixVente')
             ->add('quantite')
-            ->add('Produit',EntityType::class, [
+            ->add('Produit', EntityType::class, [
                 'class' => Produit::class,
-                'choice_label' => 'libelle',])
-        
-        ;
+                'choice_label' => 'libelle',
+                'required' => true,
+                'attr' => ['class' => 'ProduitClass',
+                'onchange'=>"myFunction(this)"
+            ],
+                'choice_attr' => function (Produit $produit) {
+                    return ['data-prix' => $produit->getPv()];
+             },
+
+            ]);
+            
+           
     }
 
     public function configureOptions(OptionsResolver $resolver): void
