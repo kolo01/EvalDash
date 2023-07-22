@@ -38,6 +38,20 @@ class ClientRepository extends ServiceEntityRepository
             $this->getEntityManager()->flush();
         }
     }
+    public function countAll(): object
+    {
+        $conn = $this->getEntityManager()->getConnection();
+
+        $sql = '
+        SELECT COUNT(name)
+        FROM client;
+            ';
+
+        
+
+        // returns an array of arrays (i.e. a raw data set)
+        return $conn->executeQuery($sql); ;
+    }
 
 //    /**
 //     * @return Client[] Returns an array of Client objects
