@@ -21,6 +21,7 @@
 		<td>{{ form_widget(form.quantite) }}</td>
 		{# <td> {{form.PrixVente}}</td> #}
 		<td>{{0 }}</td>
+		<td>{{0 }}</td>
 
 
 	{% endmacro produitMacro %}
@@ -80,20 +81,61 @@
 
 
 				<script>
+					let array_sum = [];
+					document.getElementById('commande_total').value = 0
+
 					function myFunction(val) {
-const x = document.getElementsByClassName("mySelect");
- console.log(val.options[val.selectedIndex].getAttribute('data-prix'));
-  //document.getElementById("demo").innerHTML = "You selected: " + val;
+//const x = document.getElementsByClassName("mySelect");
+//console.log(val.options[val.selectedIndex].getAttribute('data-prix'));
+const PrixVente = val.getAttribute('id').replace('Produit','PrixVente');
+const quantite = val.getAttribute('id').replace('Produit','quantite');
+document.getElementById(PrixVente).value = val.options[val.selectedIndex].getAttribute('data-prix')
+
+let prix = val.options[val.selectedIndex].getAttribute('data-prix')
+let qte = document.getElementById(quantite).value
+let total = document.getElementById(quantite).parentElement.nextElementSibling.innerHTML = qte * prix
+//console.log(total.innerHTML)
+// =  qte * prix
+//console.log(parseInt(qte) * parseInt(prix) )
+let sum=0
+array_sum[val.getAttribute('id')] = total
+Object.values(array_sum).forEach(val => {
+  sum += val
+});
+
+document.getElementById('commande_total').value = sum
+
+
+//console.log(val.parentElement.nodeName)
+//this.total_prix(array_sum)
+
+// document.getElementById("demo").innerHTML = "You selected: " + val;
 }
-					jQuery(document).ready(function () {
-						//alert("okay");
 
-	//$(".ProduitClass").on("change", function () {
-	//	alert("okay");
-	//});
+function calculate(val)
+{
+	const prod = val.getAttribute('id').replace('quantite','Produit');
+	let product =  document.getElementById(prod)
+	this.myFunction(product)
+
+}
+
+function total_prix(tableau)
+{
+	console.log(tableau)
+	tableau.forEach(() =>{
+		console.log("dsfsd")
+	})
+}
+jQuery(document).ready(function () {
+// alert("okay");
+
+// $(".ProduitClass").on("change", function () {
+// alert("okay");
+// });
 
 
-var $tagsCollectionHolder = $('#lignes');
+var $tagsCollectionHolder = $('#lignes')
 // count the current form inputs we have (e.g. 2), use that as the new
 // index when inserting a new item (e.g. 2)
 
@@ -120,7 +162,7 @@ addTagFormDeleteLink($collectionHolderClass);
 
 function addTagFormDeleteLink($tagFormLi) {
 console.log($tagFormLi)
-var $removeFormButton = $('<td><button  type="button" class=" btn btn-danger w-4">Supprimer Article</button></td></tr>');
+var $removeFormButton = $('<td><button  type="button" class=" btn btn-danger w-4">Supprimer Article</button></td>');
 $tagFormLi.append($removeFormButton);
 
 $removeFormButton.on('click', function (e) { // remove the li for the tag form
@@ -152,7 +194,7 @@ newForm = newForm.replace(/__name__/g, index);
 $collectionHolder.data('index', index + 1);
 
 // Display the form in the page in an li, before the "Add a tag" link li
-var $newFormTr = $('<table  class="table " id="lignes"></table>').append(newForm);
+var $newFormTr = $(`<table  class="table${index} " id="lignes${index} "></table>`).append(newForm);
 // Add the new form at the end of the list
 $collectionHolder.append($newFormTr);
 addTagFormDeleteLink($newFormTr);
